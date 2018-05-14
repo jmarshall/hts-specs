@@ -254,34 +254,33 @@ Free-text comments.
 
 \subsection{Barcodes}
 
+Sometimes there may be multiple applicable barcodes or unique molecular identifiers, for example, when there are barcodes attached to both ends of a template.
+In these cases, the recommended implementation concatenates all the barcode sequences or quality strings with appropriate separator characters between the different strings:
+hyphens (`{\tt -}') for~{\tt BC}, {\tt CB}, {\tt CR}, {\tt OX}, and {\tt RX} barcode/UMI sequences, and spaces (`{\tt \textvisiblespace}') for~{\tt BZ}, {\tt CY}, {\tt QT}, and {\tt QX} quality strings.
+
 \begin{description}
 \item[BC:Z:\tagvalue{sequence}]
 Barcode sequence (Identifying the sample/library), with any quality scores (optionally) stored in the {\tt QT} tag.
 The {\tt BC} tag should match the {\tt QT} tag in length. 
-In the case of multiple unique molecular identifiers (e.g., one on each end of the template) the recommended implementation concatenates all the barcodes and places a hyphen (`{\tt -}') between the barcodes from the same template. 
 
 \item[QT:Z:\tagvalue{qualities}] 
 Phred quality of the sample-barcode sequence in the {\tt BC} (or {\tt RT}) tag. 
 Same encoding as {\sf QUAL}, i.e., Phred score + 33.
-In the case of multiple unique molecular identifiers (e.g., one on each end of the template) the recommended implementation concatenates all the quality strings with spaces (`{\tt \textvisiblespace}') between the different strings from the same template. 
 
 \item[CB:Z:\tagvalue{str}]
 Cell identifier, consisting of the optionally-corrected cellular barcode sequence and an optional suffix.
 The sequence part is similar to the {\tt CR} tag, but may have had sequencing errors etc corrected.
 This may be followed by a suffix consisting of a hyphen (`{\tt -}') and one or more alphanumeric characters to form an identifier.
-In the case of the cellular barcode ({\tt CR}) being based on multiple barcode sequences the recommended implementation concatenates all the (corrected or uncorrected) barcodes with a hyphen (`{\tt -}') between the different barcodes.
 Sequencing errors etc aside, all reads from a single cell are expected to have the same {\tt CB} tag.
 
 \item[CR:Z:\tagvalue{sequence+}]
 Cellular barcode. The uncorrected sequence bases of the cellular barcode as reported by the sequencing machine, with the corresponding base quality scores (optionally) stored in {\tt CY}.
 Sequencing errors etc aside, all reads with the same {\tt CR} tag likely derive from the same cell.
-In the case of the cellular barcode being based on multiple barcode sequences the recommended implementation concatenates all the barcodes with a hyphen (`{\tt -}') between the different barcodes.
 
 \item[CY:Z:\tagvalue{qualities+}]
 Phred quality of the cellular barcode sequence in the {\tt CR} tag.
 Same encoding as {\sf QUAL}, i.e., Phred score + 33.
 The lengths of the {\tt CY} and {\tt CR} tags must match.
-In the case of the cellular barcode being based on multiple barcode sequences the recommended implementation concatenates all the quality strings with with spaces (`{\tt \textvisiblespace}') between the different strings.
 
 \item[MI:Z:\tagvalue{str}]
 Molecular Identifier. 
@@ -290,19 +289,16 @@ All reads with the same {\tt MI} tag represent the group of reads derived from t
 
 \item[OX:Z:\tagvalue{sequence+}] 
 Raw (uncorrected) unique molecular identifier bases, with any quality scores (optionally) stored in the {\tt BZ} tag. 
-In the case of multiple unique molecular identifiers (e.g., one on each end of the template) the recommended implementation concatenates all the barcodes with a hyphen (`{\tt -}') between the different barcodes.
 
 \item[BZ:Z:\tagvalue{qualities+}] 
 Phred quality of the (uncorrected) unique molecular identifier sequence in the {\tt OX} tag.
 Same encoding as {\sf QUAL}, i.e., Phred score + 33.
 The {\tt OX} tags should match the {\tt BZ} tag in length. 
-In the case of multiple unique molecular identifiers (e.g., one on each end of the template) the recommended implementation concatenates all the quality strings with a space (`{\tt \textvisiblespace}') between the different strings.
 
 \item[RX:Z:\tagvalue{sequence+}]
 Sequence bases from the unique molecular identifier.
 These could be either corrected or uncorrected. Unlike {\tt MI}, the value may be non-unique in the file.
 Should be comprised of a sequence of bases.
-In the case of multiple unique molecular identifiers (e.g., one on each end of the template) the recommended implementation concatenates all the barcodes with a hyphen (`{\tt -}') between the different barcodes.
 
 If the bases represent corrected bases, the original sequence can be stored in {\tt OX} (similar to {\tt OQ} storing the original qualities of bases.)
 
@@ -311,7 +307,6 @@ Phred quality of the unique molecular identifier sequence in the {\tt RX} tag.
 Same encoding as {\sf QUAL}, i.e., Phred score + 33.
 The qualities here may have been corrected (Raw bases and qualities can be stored in {\tt OX} and {\tt BZ} respectively.)
 The lengths of the {\tt QX} and the {\tt RX} tags must match.
-In the case of multiple unique molecular identifiers (e.g., one on each end of the template) the recommended implementation concatenates all the quality strings with a space (`{\tt \textvisiblespace}') between the different strings.
 
 \item[RT:Z:\tagvalue{sequence}]
 Deprecated alternative to {\tt BC} tag originally used at Sanger.
