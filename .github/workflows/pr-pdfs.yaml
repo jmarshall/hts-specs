@@ -12,6 +12,8 @@ jobs:
 
       - name: Identify changed LaTeX documents
         run: |
+          echo "base: $GITHUB_BASE_REF"
+          echo "head: $GITHUB_HEAD_REF"
           changed=$(git diff-tree --name-only --merge-base $GITHUB_BASE_REF $GITHUB_HEAD_REF -- '*.tex')
           test -n "$changed" && make $(ls -1 $changed | sed 's,^,new/,;s/tex$/ver/')
           echo "changed=$changed" >> $GITHUB_ENV
