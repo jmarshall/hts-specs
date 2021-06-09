@@ -1,0 +1,23 @@
+name: Generate PDFs
+
+on:
+  pull_request:
+    paths: '*.tex'
+
+jobs:
+  PDF:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Identify changed LaTeX documents
+        run: |
+          changed=$(git diff-tree --name-only --merge-base $GITHUB_BASE_REF $GITHUB_HEAD_REF -- '*.tex')
+          test -n "$changed" && make $(ls -1 $changed | sed 's,^,new/,;s/tex$/ver/')
+          echo "changed=$changed" >> $GITHUB_ENV
+
+      - uses: xu-cheng/latex-action@v2
+        if:   ${{ env.changed }}
+        with:
+          root_file: ${{ env.changed }}
+          args: --output-directory=new
