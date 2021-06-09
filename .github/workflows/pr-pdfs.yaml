@@ -10,15 +10,25 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 20
+          fetch-depth: 0
 
       - name: Identify changed LaTeX documents
+        env:
+          base_sha: ${{ github.event.pull_request.base.sha }}
+          head_sha: ${{ github.event.pull_request.head.sha }}
         run: |
           git remote -v
           git branch -a
-          echo "base: $GITHUB_BASE_REF"
-          echo "head: $GITHUB_HEAD_REF"
-          changed=$(git diff-tree --name-only --merge-base $GITHUB_BASE_REF $GITHUB_HEAD_REF -- '*.tex')
+          echo "base: $GITHUB_BASE_REF ($base_sha)"
+          echo "head: $GITHUB_HEAD_REF ($head_sha)"
+          #git fetch --depth=1 origin $GITHUB_BASE_REF:pr_base $GITHUB_HEAD_REF:pr_head
+          echo foo
+          git branch -av
+          env|grep 'GITHUB_'|sort
+          echo bar
+          git merge-base $base_sha $head_sha
+          echo baz
+          changed=$(git diff-tree --name-only --merge-base $base_sha $head_sha -- '*.tex')
           test -n "$changed" && make $(ls -1 $changed | sed 's,^,new/,;s/tex$/ver/')
           echo "changed=$changed" >> $GITHUB_ENV
 
