@@ -9,9 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 20
 
       - name: Identify changed LaTeX documents
         run: |
+          git remote -v
+          git branch -a
           echo "base: $GITHUB_BASE_REF"
           echo "head: $GITHUB_HEAD_REF"
           changed=$(git diff-tree --name-only --merge-base $GITHUB_BASE_REF $GITHUB_HEAD_REF -- '*.tex')
