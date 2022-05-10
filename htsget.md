@@ -59,9 +59,10 @@ For errors that are specific to the `htsget` protocol, the response body SHOULD 
 <table>
 <tr markdown="block"><td>
 
-`htsget`
+`htsget`  
 _object_
 </td><td>
+
 Container for response object.
 <table>
 <tr markdown="block"><td>
@@ -69,6 +70,7 @@ Container for response object.
 `error`  
 _string_
 </td><td>
+
 The type of error. This SHOULD be chosen from the list below.
 </td></tr>
 <tr markdown="block"><td>
@@ -76,6 +78,7 @@ The type of error. This SHOULD be chosen from the list below.
 `message`  
 _string_
 </td><td>
+
 A message specific to the error providing information on how to debug the problem. Clients MAY display this message to the user.
 </td></tr>
 </table>
@@ -242,6 +245,7 @@ The server SHOULD respond with an `InvalidRange` error if `start` and `end` are 
 `fields`  
 _optional_
 </td><td>
+
 A list of fields to include, see below.
 Default: all
 </td></tr>
@@ -329,7 +333,7 @@ The server SHOULD reply with an `UnsupportedFormat` error if the requested forma
 </td></tr>
 <tr markdown="block"><td>
 
-`class`
+`class`  
 _optional string_
 </td><td>
 
@@ -401,7 +405,8 @@ Any overlapping regions will be merged.
 The server SHOULD respond with an `InvalidInput` error if the region list is empty or not well-formed.
   <table><tbody><tr markdown="block"><td>
 
-`referenceName` _string_
+`referenceName`  
+_string_
   </td><td>
 
 The reference sequence name, for example "chr1", "1", or "chrX".
@@ -412,7 +417,8 @@ The server SHOULD reply with a `NotFound` error if the requested reference does 
   </td></tr>
   <tr markdown="block"><td>
 
-`start` _optional unsigned integer_
+`start`  
+_optional unsigned integer_
   </td><td>
 
 The start position of the range on the reference, 0-based, inclusive.
@@ -424,7 +430,8 @@ are specified and `start` is greater than or equal to `end`.
   </td></tr>
   <tr markdown="block"><td>
 
-`end` _optional unsigned integer_
+`end`  
+_optional unsigned integer_
   </td><td>
 
 The end position of the range on the reference, 0-based exclusive.
@@ -477,9 +484,10 @@ Clients will need to filter out any extraneous records if necessary.
 <table>
 <tr markdown="block"><td>
 
-`htsget`
+`htsget`  
 _object_
 </td><td>
+
 Container for response object.
 <table>
 <tr markdown="block"><td>
@@ -487,6 +495,7 @@ Container for response object.
 `format`  
 _string_
 </td><td>
+
 Response data in this format. The allowed values for each type of record are:
 
 * Reads: BAM (default), CRAM.
@@ -525,7 +534,7 @@ For HTTPS URLs, the server may supply a JSON object containing one or more strin
 </td></tr>
 <tr markdown="block"><td>
 
-`class`
+`class`  
 _optional string_
 </td><td>
 
@@ -646,6 +655,7 @@ Following the [GA4GH service-info specification](https://github.com/ga4gh-discov
 `datatype`  
 _optional string_
 </td><td>
+
 Indicates the htsget datatype category ('reads' or 'variants') served by the ticket endpoint related to this service-info endpoint. Use either:
 
 * reads
