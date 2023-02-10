@@ -35,7 +35,7 @@ jobs:
         if:   ${{ env.changed }}
         with:
           run1: make ${{ env.pdfs }}
-          run2: -make -k OLD=$mergebase_sha NEW=HEAD ${{ env.diffs }}
+          run2: make -k OLD=$mergebase_sha NEW=HEAD ${{ env.diffs }}
 
       - uses: actions/upload-artifact@v3
         with:
