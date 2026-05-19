@@ -178,7 +178,11 @@ _optional string_
 Request data in this format. The allowed values for each type of record are:
 
 * Reads: BAM (default), CRAM.
-* Variants: VCF (default), BCF.
+* Variants: VCF (default), VCFTEXT, BCF.
+
+VCFTEXT indicates a request for uncompressed VCF in plaintext.
+When VCF is specified or by default, the server SHOULD return gzip-compressed (or BGZF-compressed) VCF data.
+At present, the server MAY instead return uncompressed plaintext VCF in these cases, but this is deprecated.
 
 The server SHOULD reply with an `UnsupportedFormat` error if the requested format is not supported.
 </td></tr>
@@ -760,6 +764,11 @@ Example listing of htsget reads API and variants API registrations from a servic
 # Version history
 
 This appendix lists the significant functionality introduced and changes made in each published version of the htsget protocol.
+
+## 1.3.1 (May 2026)
+{:.no_toc}
+
+Added VCFTEXT and clarified whether VCF variants response data is compressed or uncompressed.
 
 ## 1.3.0 (March 2021)
 {:.no_toc}
